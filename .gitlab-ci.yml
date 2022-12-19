@@ -1,0 +1,25 @@
+image: ubuntu:latest
+
+before_script:
+  - apt update
+  - apt install maven -y
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build:
+  stage: build
+  script:
+    - mvn compile
+
+test:
+  stage: test
+  script:
+    - mvn test
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 5 minutes
+
